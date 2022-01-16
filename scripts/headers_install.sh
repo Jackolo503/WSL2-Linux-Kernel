@@ -25,8 +25,8 @@ trap 'rm -f $OUTFILE $TMPFILE' EXIT
 
 # SPDX-License-Identifier with GPL variants must have "WITH Linux-syscall-note"
 if [ -n "$(sed -n -e "/SPDX-License-Identifier:.*GPL-/{/WITH Linux-syscall-note/!p}" $INFILE)" ]; then
-	echo "error: $INFILE: missing \"WITH Linux-syscall-note\" for SPDX-License-Identifier" >&2
-	exit 1
+	echo "warning: $INFILE: missing \"WITH Linux-syscall-note\" for SPDX-License-Identifier" >&2
+	sed -i -e 's,(/SPDX-License-Identifier:.*GPL-),\1 WITH Linux-syscall-note,g' $INFILE
 fi
 
 sed -E -e '
